@@ -9,14 +9,19 @@ Sends notifications via. a Discord message. This module makes use of a bot as op
 - Set up config file. It should be called `config.json` and be within the same directory as `index.js`.
 
 ## Config structure
+
 ```json
 {
   "url": "",
   "interval": 5,
-  "channel": "",
+  "channels": [
+    {
+      "id": "",
+      "crosspost": true
+    }
+  ],
   "message": "",
   "initialPost": 23,
-  "crosspost": true,
   "token": ""
 }
 ```
@@ -25,10 +30,11 @@ Sends notifications via. a Discord message. This module makes use of a bot as op
 | --- | ---  | ------------| 
 | url | String | The JSON endpoint URL. Usually the URL of the post, with `.json` appended to the end. |
 | interval | Number | The time between GET requests to check for new content. Lower = faster notifications, at the cost of more http requests. Do not set this below 0.5.|
-| channel | String(Snowflake) | The channel id of the channel  you want the messages to go in |
+| channels | Array<ChannelConfig> |  An array of Channel configuration objects. |
+| ChannelConfig.id | String(Snowflake) | The channel id of the channel  you want the messages to go in |
+| ChannelConfig.crosspost | boolean |  Whether or not the bot should cross-post to following servers. Set to false if not using an announcement channel. |
 | message | String |The message to prepend to the message. This is added before the URL of the latest post. |
 | initialPost | number | The first post you want to consider. If monitoring a huge post, you will need to get the post number of the latest post from the JSON endpoint. |
-| crosspost | boolean | Whether or not the bot should cross-post to following servers. Set to false if not using an announcement channel.
 | token | String | The discord bot token. The bot must have Send messages and Manage messages within the channel in question. |
 
 ### Support

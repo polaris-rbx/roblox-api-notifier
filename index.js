@@ -1,5 +1,5 @@
 const fetch = require("node-fetch");
-const { interval: intervalSeconds, url, token, channel, crosspost, initialPost, message } = require("./config.json");
+const { interval: intervalSeconds, url, token, channels, initialPost, message } = require("./config.json");
 const { join } = require("path");
 const { promises: {readFile, writeFile } } = require("fs");
 const lastNumLoc = join(__dirname, "lastNum");
@@ -58,10 +58,19 @@ async function getNew () {
 }
 
 async function notifyPost (name, post) {
-    const m = await bot.createMessage(channel, { content: `${message}\nBy: ${post.username}.\n\n${post.url}` })
-    if (m && m.id && crosspost) {
-        await bot.crosspostMessage(channel, m.id);
+    for (const channelConfig of channels) {
+        const channel = channelConfig.id;
+        const crosspost = channelConfig.crosspost;
+        try {
+            const m = await bot.createMessage(channel, { content: `${message}\nBy: ${post.username}.\n\n${post.url}` })
+            if (m && m.id && crosspost) {
+                await bot.crosspostMessage(channel, m.id);
+            }
+        } catch (e) {
+            console.error(`Failed to message ${channel}: ${e}`);
+        }
     }
+
 }
 
 
