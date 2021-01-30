@@ -1,0 +1,15 @@
+{
+  "name": "roblox-api-notify",
+  "version": "1.0.0",
+  "description": "Sends message notifications based on changes to a discourse post",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Neztore",
+  "license": "MIT",
+  "dependencies": {
+    "eris": "^0.14.0",
+    "node-fetch": "^2.6.1"
+  }
+}
