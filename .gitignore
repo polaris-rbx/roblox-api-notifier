@@ -1,0 +1,7 @@
+
+.idea/
+
+*.json
+
+node_modules/
+lastNum
